@@ -9,36 +9,68 @@ public class VerletSolver implements Solver {
     private VerletGrid grid;
     private double gx,gy = -1000;
     private boolean enableCollisions;
+
+    /**
+     * Cannot be instanced! <br>
+     * Use {@link Verlet#createSolver(VerletContainer)} instead!
+     */
     private VerletSolver() {
         this.subSteps = 1;
         this.enableCollisions = true;
     }
 
+    /**
+     * Enables/Disables collisions between spheres. This can drastically improve performance but spheres obviously won't collide.
+     * @param b If true spheres WILL collide
+     */
     @Override
     public void enableCollisions(boolean b) {
         this.enableCollisions = b;
     }
 
+    /**
+     * Sets a new VerletContainer. The Solver will now solve a different Scenario
+     * @param container the new Container to solve from now onwards
+     */
     public void setContainer(VerletContainer container) {
         this.container = container;
     }
 
+    /**
+     * Sets a VerletGrid to the Solver. By default, the Grid is null. Insert null value to remove the Grid
+     * @param grid The VerletGrid to use for the Solver. Can be null
+     */
     @Override
     public void setGrid(VerletGrid grid) {
         this.grid = grid;
     }
 
+    /**
+     * Sets the gravity of the solver.
+     * @param x X Velocity of the gravity (0 = zero x gravity)
+     * @param y Y Velocity of the gravity (0 = zero y gravity)
+     */
     @Override
     public void setGravity(double x, double y) {
         this.gx = x;
         this.gy = y;
     }
 
+    /**
+     * Sets the amount of sub steps. The amount of sub steps decide how many times the simulation is stepped between each step.
+     * Will increase the accuracy of the simulation but tank the performance.
+     * Default is 0
+     * @param subSteps the amount of sub stepping to take between each step.
+     */
     @Override
     public void setSubSteps(int subSteps) {
         this.subSteps = subSteps;
     }
 
+    /**
+     * Steps the simulation. Every Physic Object will move towards their next position.
+     * @param dt the amount of "time" to step forwards
+     */
     @Override
     public void step(float dt) {
 
@@ -60,22 +92,39 @@ public class VerletSolver implements Solver {
         }
     }
 
+    /**
+     * Updates the position according to the verlet formula of each sphere
+     * @param dt the amount of "time" to step forwards
+     */
     private void updatePosition(float dt) {
         container.invokeSpheres(sphere -> {
             sphere.updatePosition(dt);
         });
     }
 
+    /**
+     * Solves the collisions between every Sphere.
+     * Either solves collisions by comparing every Sphere with each other or by using the VerletGrid if one exists
+     */
     private void solveCollisions() {
         if(grid == null) container.invokeSpheresWithSpheres(this::solveCollisions);
         else solveCollisionsViaGrid();
     }
 
+    /**
+     * Solves collisions by using the VerletGrid.
+     * First reassigns every Sphere to the Grid. Then Invokes every Sphere on the Grid with nearby Spheres
+     */
     private void solveCollisionsViaGrid() {
         grid.assignCells(container);
         grid.invokeCellsSkipBordersAndNeighborCell(this::solveCellCollisions);
     }
 
+    /**
+     * Solves the collisions between two Cells
+     * @param cell_1 The first cell
+     * @param cell_2 The second cell
+     */
     private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2) {
         for(Sphere sphere_1 : cell_1.getSpheres()) {
             for(Sphere sphere_2 : cell_2.getSpheres()) {
@@ -84,6 +133,14 @@ public class VerletSolver implements Solver {
         }
     }
 
+    /**
+     * Solves the collision between two Spheres
+     * First checks if they are even colliding, if so calculate in what direction they bounce of.
+     * Also accounts Sphere weight
+     *
+     * @param sphere_1 The first Sphere
+     * @param sphere_2 The second Sphere
+     */
     private void solveCollisions(Sphere sphere_1, Sphere sphere_2) {
 
         double dx = sphere_1.getX() - sphere_2.getX();
@@ -103,20 +160,39 @@ public class VerletSolver implements Solver {
 
     }
 
+    /**
+     * Adds towards the existing position vector effectively moving the Sphere
+     * @param sphere The Sphere to move
+     * @param x The X Amount to move
+     * @param y The Y Amount to move
+     */
     private void applyNewPosition(Sphere sphere, double x, double y) {
         sphere.setX(sphere.getX() + x);
         sphere.setY(sphere.getY() + y);
     }
 
+    /**
+     * Applies every Constraint
+     * @param scene Passes the Scene, because Constraints need a Scene to function
+     */
     private void applyConstraints(Scene scene) {
         scene.invokeConstraint(this::applyConstraint);
     }
 
+    /**
+     * Applies a specific Constraint
+     * Checks if Constraint is a SceneConstraint or a StaticConstraint, then applies it
+     *
+     * @param constraint The Constraint to apply
+     */
     private void applyConstraint(Constraint constraint) {
         if(constraint instanceof SceneConstraint) container.invokeSpheres(((SceneConstraint)constraint)::apply);
         else if(constraint instanceof StaticConstraint) ((StaticConstraint)constraint).apply();
     }
 
+    /**
+     * Applies gravity to every Sphere using the existing values
+     */
     private void applyGravity() {
         container.invokeSpheres((sphere -> {
             sphere.accelerate(gx,gy);
