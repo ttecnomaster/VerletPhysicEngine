@@ -12,15 +12,27 @@ public class Main {
         JFrame frame = new JFrame("Window");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setVisible(true);
 
         Scene scene = Verlet.createScene();
+        Solver solver = Verlet.createSolver(scene);
 
-        scene.addSphere(Verlet.createSphere(0, 0, 50));
+        scene.addSphere(Verlet.createSphere(-250, 130, 25));
+        scene.addSphere(Verlet.createSphere(250, 130, 25));
+        scene.addSphere(Verlet.createSphere(250, 100, 25));
+        scene.addConstraint(new CircleAreaConstraint(0,0,400));
 
         VerletPanel panel = new VerletPanel(scene);
 
         frame.add(panel);
+
+        frame.setVisible(true);
+
+        new Runner(60, () -> {
+
+            solver.step(0.02f);
+            panel.repaint();
+
+        }).start();
 
     }
 
@@ -59,6 +71,54 @@ public class Main {
         }
         private int translateY(double y) {
             return (int) -(y - getHeight()/2);
+        }
+    }
+
+    private static class Runner extends Thread {
+        private int fps;
+        private volatile double ns;
+        private final Runnable runnable;
+
+        protected Runner(int fps, Runnable runnable) {
+            this.setFps(fps);
+            this.runnable = runnable;
+        }
+
+        public synchronized void setFps(int fps) {
+            this.fps = fps;
+            this.ns();
+        }
+
+        private void ns() {
+            this.ns = 1.0E9 / (double)this.fps;
+        }
+
+        public void run() {
+            long lastTime = System.nanoTime();
+            double delta = 0.0;
+            long timer = System.currentTimeMillis();
+            int frames = 0;
+
+            while(true) {
+                if (this.fps != -1) {
+                    long now = System.nanoTime();
+                    delta += (double)(now - lastTime) / this.ns;
+
+                    for(lastTime = now; delta >= 1.0; --delta) {
+                        this.tick();
+                    }
+
+                    ++frames;
+                    if (System.currentTimeMillis() - timer > 1000L) {
+                        timer += 1000L;
+                        frames = 0;
+                    }
+                }
+            }
+        }
+
+        public void tick() {
+            this.runnable.run();
         }
     }
 }
