@@ -10,10 +10,10 @@ public class VerletGrid {
     private double x,y,width,height;
     private float radius;
     private Cell[][] cells;
-    VerletGrid(double x, double y, float radius) {
+    public VerletGrid(double x, double y, float radius) {
         this(-x,-y,x*2,y*2,radius);
     }
-    VerletGrid(double x, double y, double width, double height, float radius) {
+    public VerletGrid(double x, double y, double width, double height, float radius) {
         this.x = x;
         this.y = y;
         this.width = width;
