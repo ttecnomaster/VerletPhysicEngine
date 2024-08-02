@@ -1,5 +1,9 @@
 package com.github.tecnomaster;
 
-public interface Scene extends VerletContainer {
+import com.github.tecnomaster.implementation.ConstraintRunnable;
 
+public interface Scene extends VerletContainer {
+    void addConstraint(Constraint constraint);
+    void removeConstraint(Constraint constraint);
+    void invokeConstraint(ConstraintRunnable runnable);
 }
