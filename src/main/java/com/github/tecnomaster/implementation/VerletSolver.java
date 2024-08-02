@@ -6,6 +6,7 @@ import com.github.tecnomaster.utils.VectorUtil;
 public class VerletSolver implements Solver {
     private VerletContainer container;
     private int subSteps;
+    private VerletGrid grid;
     private double gx,gy = -1000;
     private boolean enableCollisions;
     private VerletSolver() {
@@ -20,6 +21,11 @@ public class VerletSolver implements Solver {
 
     public void setContainer(VerletContainer container) {
         this.container = container;
+    }
+
+    @Override
+    public void setGrid(VerletGrid grid) {
+        this.grid = grid;
     }
 
     @Override
@@ -61,7 +67,21 @@ public class VerletSolver implements Solver {
     }
 
     private void solveCollisions() {
-        container.invokeSpheresWithSpheres(this::solveCollisions);
+        if(grid == null) container.invokeSpheresWithSpheres(this::solveCollisions);
+        else solveCollisionsViaGrid();
+    }
+
+    private void solveCollisionsViaGrid() {
+        grid.assignCells(container);
+        grid.invokeCellsSkipBordersAndNeighborCell(this::solveCellCollisions);
+    }
+
+    private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2) {
+        for(Sphere sphere_1 : cell_1.getSpheres()) {
+            for(Sphere sphere_2 : cell_2.getSpheres()) {
+                if(sphere_1 != sphere_2) solveCollisions(sphere_1,sphere_2);
+            }
+        }
     }
 
     private void solveCollisions(Sphere sphere_1, Sphere sphere_2) {
