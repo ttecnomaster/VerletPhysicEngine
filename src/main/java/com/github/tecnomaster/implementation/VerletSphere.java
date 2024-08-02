@@ -22,7 +22,21 @@ public class VerletSphere implements Sphere {
     @Override
     public void updatePosition(float dt) {
 
+        // Calculate current velocity
+        double vx = x - lx;
+        double vy = y - ly;
 
+        // Update last position
+        lx = x;
+        ly = y;
+
+        // Update actual position
+        x = x + vx + ax * dt * dt;
+        y = y + vy + ay * dt * dt;
+
+        // reset acceleration variable
+        ax = 0;
+        ay = 0;
 
     }
 
