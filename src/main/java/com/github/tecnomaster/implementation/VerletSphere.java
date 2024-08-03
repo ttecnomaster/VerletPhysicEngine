@@ -8,12 +8,15 @@ public class VerletSphere implements Sphere {
     private double lx,ly;
     private double x,y;
     private float radius;
+    private float weight;
 
     /**
      * Cannot be instanced! <br>
      * Use {@link Verlet#createSphere(double, double, float)} instead!
      */
-    protected VerletSphere() {}
+    protected VerletSphere() {
+        weight = (float) Math.random();
+    }
 
     public void setAttributes(double x, double y, float radius) {
         this.ax = 0;
@@ -151,6 +154,6 @@ public class VerletSphere implements Sphere {
      */
     @Override
     public float getWeight() {
-        return getRadius();
+        return getRadius() * weight;
     }
 }
