@@ -15,8 +15,8 @@ public class BorderConstraint implements SceneConstraint {
     @Override
     public void apply(Sphere sphere) {
 
-        if(type == Type.TOP) if(sphere.getY() > v-sphere.getRadius()) sphere.setY(v - sphere.getRadius());
-        if(type == Type.BOTTOM) if(sphere.getY() < v+sphere.getRadius()) sphere.setY(v + sphere.getRadius());
+        if(type == Type.TOP) if(sphere.getY() < v+sphere.getRadius()) sphere.setY(v + sphere.getRadius());
+        if(type == Type.BOTTOM) if(sphere.getY() > v-sphere.getRadius()) sphere.setY(v - sphere.getRadius());
         if(type == Type.RIGHT) if(sphere.getX() > v-sphere.getRadius()) sphere.setX(v - sphere.getRadius());
         if(type == Type.LEFT) if(sphere.getX() < v+sphere.getRadius()) sphere.setX(v + sphere.getRadius());
 
