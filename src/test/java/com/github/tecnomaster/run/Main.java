@@ -1,6 +1,7 @@
 package com.github.tecnomaster.run;
 
 import com.github.tecnomaster.*;
+import com.github.tecnomaster.constraint.BorderConstraint;
 import com.github.tecnomaster.constraint.CircleAreaConstraint;
 import com.github.tecnomaster.implementation.VerletGrid;
 
@@ -17,9 +18,7 @@ public class Main {
         Scene scene = Verlet.createScene();
         Solver solver = Verlet.createSolver(scene);
 
-        solver.setGrid(new VerletGrid(2,2,5));
-
-        scene.addSphere(Verlet.createSphere(-250, 130, 25));
+        //scene.addSphere(Verlet.createSphere(-250, 130, 25));
         scene.addSphere(Verlet.createSphere(250, 130, 25));
         scene.addSphere(Verlet.createSphere(250, 100, 25));
         scene.addConstraint(new CircleAreaConstraint(0,0,400));
