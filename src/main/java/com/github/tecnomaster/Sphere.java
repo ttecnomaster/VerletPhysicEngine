@@ -1,5 +1,18 @@
 package com.github.tecnomaster;
 
+/**
+ * A Sphere a Physic Object in the simulation. It is added to a {@link VerletContainer} and solved by the {@link Solver}.
+ * A Sphere can have a position and a radius. It also returns a weight value which is normally equal to the radius.
+ * The Sphere works by having a position and an old position. With the old position it can determine the momentum of the Sphere.
+ * You can accelerate the Sphere by calling {@link Sphere#accelerate(double, double)}.
+ * Gravity uses the accelerate method in order to add downwards momentum
+ *
+ * @author tecno-master
+ * @see com.github.tecnomaster.implementation.VerletSphere
+ * @see VerletContainer
+ * @see Solver
+ * @version 1.0.0
+ */
 public interface Sphere {
 
     /**
