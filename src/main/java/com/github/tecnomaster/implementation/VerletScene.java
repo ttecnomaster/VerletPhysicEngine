@@ -1,13 +1,20 @@
 package com.github.tecnomaster.implementation;
 
-import com.github.tecnomaster.Constraint;
-import com.github.tecnomaster.Scene;
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.Verlet;
+import com.github.tecnomaster.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The VerletScene is the implementation of the {@link Scene} interface which can handle Spheres and Constraints.
+ * A {@link VerletContainer} can add, remove and invoke Spheres.
+ * A {@link Scene} can also add, remove and invoke Constraints.
+ *
+ * @author tecno-master
+ * @see Scene
+ * @see VerletContainer
+ * @version 1.0.0
+ */
 public class VerletScene implements Scene {
     private final List<Sphere> spheres;
     private final List<Constraint> constraints;

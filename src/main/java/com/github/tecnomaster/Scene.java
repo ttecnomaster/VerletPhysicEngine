@@ -2,6 +2,16 @@ package com.github.tecnomaster;
 
 import com.github.tecnomaster.implementation.ConstraintRunnable;
 
+/**
+ * A Scene is a type of {@link VerletContainer} that can also handle Constraints.
+ * Constraints are crucial to a simulation because Constraints are essential to make a good simulation.
+ * A Scene can add, remove and invoke Constraints.
+ *
+ * @author tecno-master
+ * @see com.github.tecnomaster.implementation.VerletScene
+ * @see VerletContainer
+ * @version 1.0.0
+ */
 public interface Scene extends VerletContainer {
 
     /**
