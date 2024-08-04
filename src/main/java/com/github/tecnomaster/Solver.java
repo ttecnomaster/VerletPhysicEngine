@@ -2,6 +2,18 @@ package com.github.tecnomaster;
 
 import com.github.tecnomaster.implementation.VerletGrid;
 
+/**
+ * The Solver is the heart of the simulation. It handles all the physics and ensures that the simulation is stepping correctly.
+ * It allows to set sub steps who decide how many times the simulation is stepped between each step.
+ * It also allows to set a {@link VerletGrid} which can drastically improve performance.
+ * It requires a {@link VerletContainer} in order to run. If it gets a {@link Scene} it can also handle Constraints.
+ *
+ * @author tecno-master
+ * @see com.github.tecnomaster.implementation.VerletSolver
+ * @see VerletGrid
+ * @see VerletContainer
+ * @version 1.0.0
+ */
 public interface Solver {
 
     /**
