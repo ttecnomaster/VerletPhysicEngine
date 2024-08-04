@@ -86,7 +86,7 @@ public class VerletScene implements Scene {
      * @param runnable The Runnable which is called by every Constraint
      */
     @Override
-    public void invokeConstraint(ConstraintRunnable runnable) {
+    public void invokeConstraints(ConstraintRunnable runnable) {
         for(int i = 0; i < constraints.size(); i++) {
             runnable.run(constraints.get(i));
         }

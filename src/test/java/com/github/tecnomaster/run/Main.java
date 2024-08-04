@@ -1,9 +1,7 @@
 package com.github.tecnomaster.run;
 
 import com.github.tecnomaster.*;
-import com.github.tecnomaster.constraint.BorderConstraint;
 import com.github.tecnomaster.constraint.CircleAreaConstraint;
-import com.github.tecnomaster.implementation.VerletGrid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,11 +46,11 @@ public class Main {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
-            container.invokeSpheres((sphere -> {
+            container.invokeSpheres(sphere -> {
                 drawSphere(sphere,g);
-            }));
+            });
 
-            if(container instanceof Scene) ((Scene)container).invokeConstraint(constraint -> drawConstraint(constraint, g));
+            if(container instanceof Scene) ((Scene)container).invokeConstraints(constraint -> drawConstraint(constraint, g));
         }
 
         private void drawSphere(Sphere sphere, Graphics g) {

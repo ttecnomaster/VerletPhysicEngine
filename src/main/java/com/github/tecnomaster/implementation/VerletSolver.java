@@ -176,7 +176,7 @@ public class VerletSolver implements Solver {
      * @param scene Passes the Scene, because Constraints need a Scene to function
      */
     private void applyConstraints(Scene scene) {
-        scene.invokeConstraint(this::applyConstraint);
+        scene.invokeConstraints(this::applyConstraint);
     }
 
     /**
