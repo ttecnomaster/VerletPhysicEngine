@@ -3,6 +3,18 @@ package com.github.tecnomaster;
 import com.github.tecnomaster.implementation.SphereRunnable;
 import com.github.tecnomaster.implementation.TwoSphereRunnable;
 
+/**
+ * A VerletContainer is Container that holds and handles Spheres.
+ * Spheres are the Physic Objects of the simulation therefor a Container for those is required.
+ * The {@link Solver} needs a VerletContainer in order to step the simulation.
+ * A Scene can add, remove and invoke Constraints.
+ *
+ * @author tecno-master
+ * @see Solver
+ * @see Scene
+ * @see com.github.tecnomaster.implementation.VerletScene
+ * @version 1.0.0
+ */
 public interface VerletContainer {
 
     /**
