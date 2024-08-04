@@ -8,8 +8,13 @@ import java.util.Set;
 
 /**
  * A VerletGrid defines an area and a radius in which collisions are performed.
- * Adding a VerletGrid to a Solver can drastically increase performance.
+ * Adding a VerletGrid to a {@link com.github.tecnomaster.Solver} can drastically increase performance.
  * The radius defines the size of one grid cell. No Sphere is allowed to be bigger than that defined radius
+ *
+ * @author tecno-master
+ * @see com.github.tecnomaster.Solver
+ * @see VerletSolver
+ * @version 1.0.0
  */
 public class VerletGrid {
     private final double x,y,width,height;
