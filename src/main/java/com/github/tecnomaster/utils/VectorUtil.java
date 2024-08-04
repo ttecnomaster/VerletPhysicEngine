@@ -1,5 +1,15 @@
 package com.github.tecnomaster.utils;
 
+/**
+ * VectorUtil class is a util class that provides methods for calculating with Vectors.
+ * This is required because this project uses primitive datatype (double) for vectors.
+ * The Solver and Constraints often need to calculate with Vectors.
+ *
+ * @author tecno-master
+ * @see com.github.tecnomaster.Constraint
+ * @see com.github.tecnomaster.Solver
+ * @version 1.0.0
+ */
 public class VectorUtil {
     /**
      * Calculates the length of a vector. Uses the pythagorean theorem in order to calculate the length
