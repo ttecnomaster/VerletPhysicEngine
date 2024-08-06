@@ -3,6 +3,7 @@ package com.github.tecnomaster.implementation;
 import com.github.tecnomaster.Sphere;
 import com.github.tecnomaster.VerletContainer;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,16 @@ public class VerletGrid {
      * @param radius defines the size of one grid cell. No Sphere is allowed to be bigger than that defined radius
      */
     public VerletGrid(double width, double height, float radius) {
-        this(-width/2,-height/2, width, height,radius * 2);
+        this(-width/2,-height/2, width, height, radius);
+    }
+
+    /**
+     * Constructs a new <code>Rectangle</code>, initialized to match the values of the specified <code>Rectangle</code>.
+     *
+     * @param r the <code>Rectangle</code> from which to copy initial values to a newly constructed <code>Rectangle</code>
+     */
+    public VerletGrid(Rectangle r, float radius) {
+        this(r.getX(), r.getY(), r.getWidth(), r.getHeight(), radius);
     }
 
     /**
@@ -47,8 +57,8 @@ public class VerletGrid {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.radius = radius;
-        this.cells = new Cell[(int) (width/radius)][(int) (height/radius)];
+        this.radius = radius * 2;
+        this.cells = new Cell[(int) Math.ceil(this.width/this.radius)][(int) Math.ceil(this.height/this.radius)];
         initializeCells();
     }
 

@@ -19,13 +19,13 @@ public class Main {
         Solver solver = Verlet.createSolver(scene);
 
         solver.setSubSteps(8);
-        solver.setGrid(new VerletGrid(1920*1.5,1080*1.5, 25));
+        solver.setGrid(new VerletGrid(1920,1080, 25));
 
         for(int i = 0; i < 180; i++) {
             scene.addSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25));
         }
 
-        scene.addConstraint(new RectangleConstraint(1920, 1080));
+        scene.addConstraint(new RectangleConstraint(1920-50, 1080-50));
 
         VerletPanel panel = new VerletPanel(scene);
 
