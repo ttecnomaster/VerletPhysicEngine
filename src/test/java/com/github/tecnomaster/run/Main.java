@@ -5,7 +5,6 @@ import com.github.tecnomaster.constraint.CircleAreaConstraint;
 import com.github.tecnomaster.constraint.RectangleConstraint;
 import com.github.tecnomaster.custom.CustomSphere;
 import com.github.tecnomaster.implementation.VerletGrid;
-import javafx.scene.shape.Circle;
 
 import javax.swing.*;
 import java.awt.*;

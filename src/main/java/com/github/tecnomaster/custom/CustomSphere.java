@@ -1,10 +1,15 @@
 package com.github.tecnomaster.custom;
 
 import com.github.tecnomaster.Sphere;
+import com.github.tecnomaster.Verlet;
 
 public abstract class CustomSphere implements Sphere {
 
     private final Sphere parent;
+
+    public CustomSphere(double x, double y, float radius) {
+        this(Verlet.createSphere(x, y, radius));
+    }
 
     public CustomSphere(Sphere sphere) {
         if(sphere instanceof CustomSphere) throw new IllegalArgumentException("Cannot customize CustomSphere! Please provide a basic Sphere!");
