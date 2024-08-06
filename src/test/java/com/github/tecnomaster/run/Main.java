@@ -3,7 +3,9 @@ package com.github.tecnomaster.run;
 import com.github.tecnomaster.*;
 import com.github.tecnomaster.constraint.CircleAreaConstraint;
 import com.github.tecnomaster.constraint.RectangleConstraint;
+import com.github.tecnomaster.custom.CustomSphere;
 import com.github.tecnomaster.implementation.VerletGrid;
+import javafx.scene.shape.Circle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,7 @@ public class Main {
         solver.setGrid(new VerletGrid(1920,1080, 25));
 
         for(int i = 0; i < 180; i++) {
-            scene.addSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25));
+            scene.addSphere(new ColorSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25), new Color((int) (Math.random()*256),(int) (Math.random()*256),(int) (Math.random()*256))));
         }
 
         scene.addConstraint(new RectangleConstraint(1920-50, 1080-50));
@@ -40,6 +42,19 @@ public class Main {
 
         }).start();
 
+    }
+
+    private static class ColorSphere extends CustomSphere {
+        private final Color color;
+
+        public ColorSphere(Sphere sphere, Color color) {
+            super(sphere);
+            this.color = color;
+        }
+
+        public Color getColor() {
+            return color;
+        }
     }
 
     private static class VerletPanel extends JPanel {
@@ -61,6 +76,8 @@ public class Main {
 
         private void drawSphere(Sphere sphere, Graphics g) {
             int radius = (int) sphere.getRadius();
+            if(sphere instanceof ColorSphere) g.setColor(((ColorSphere)sphere).getColor());
+            else g.setColor(Color.BLACK);
             g.fillOval(translateX(sphere.getX()) - radius, translateY(sphere.getY()) - radius, radius*2, radius*2);
         }
 
