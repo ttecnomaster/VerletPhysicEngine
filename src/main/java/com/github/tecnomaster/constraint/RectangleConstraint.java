@@ -7,6 +7,10 @@ public class RectangleConstraint implements SceneConstraint {
 
     private final BorderConstraint top, bottom, right, left;
 
+    public RectangleConstraint(double x, double y) {
+        this(-x/2, -y/2, x, y);
+    }
+
     public RectangleConstraint(double x, double y, double width, double height) {
         top = new BorderConstraint(BorderConstraint.Type.BOTTOM, y + height);
         bottom = new BorderConstraint(BorderConstraint.Type.TOP, y);
