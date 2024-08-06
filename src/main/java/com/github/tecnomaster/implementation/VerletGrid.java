@@ -30,7 +30,7 @@ public class VerletGrid {
      * @param radius defines the size of one grid cell. No Sphere is allowed to be bigger than that defined radius
      */
     public VerletGrid(double x, double y, float radius) {
-        this(-x,-y,x*2,y*2,radius);
+        this(-x,-y,x*2,y*2,radius * 2);
     }
 
     /**
