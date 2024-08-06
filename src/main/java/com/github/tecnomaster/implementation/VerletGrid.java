@@ -25,12 +25,12 @@ public class VerletGrid {
      * Defines an area and a radius in which collisions are performed.
      * Automatically creates an area from the x and y inputs
      *
-     * @param x The X Position of the area
-     * @param y The Y Position of the area
+     * @param width The X Position of the area
+     * @param height The Y Position of the area
      * @param radius defines the size of one grid cell. No Sphere is allowed to be bigger than that defined radius
      */
-    public VerletGrid(double x, double y, float radius) {
-        this(-x,-y,x*2,y*2,radius * 2);
+    public VerletGrid(double width, double height, float radius) {
+        this(-width/2,-height/2, width, height,radius * 2);
     }
 
     /**
