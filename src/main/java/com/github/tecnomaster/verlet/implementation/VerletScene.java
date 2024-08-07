@@ -80,6 +80,7 @@ public class VerletScene implements Scene {
      * @param runnable The Runnable which is called by every Sphere Pairs
      */
     @Override
+    @Deprecated
     public void invokeSpheresWithSpheres(TwoSphereRunnable runnable) {
         for(int i = 0; i < spheres.size(); ++i) {
             for(int j = i+1; j < spheres.size(); ++j) {

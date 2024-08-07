@@ -41,6 +41,7 @@ public interface VerletContainer extends MultiThreadingSupport {
      * Invokes every Sphere with each Sphere exactly once and calls the runnable
      * @param runnable The Runnable which is called by every Sphere Pairs
      */
+    @Deprecated
     void invokeSpheresWithSpheres(TwoSphereRunnable runnable);
 
 }

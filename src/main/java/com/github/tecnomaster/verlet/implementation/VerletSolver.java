@@ -133,19 +133,6 @@ public class VerletSolver implements Solver {
     }
 
     /**
-     * Solves the collisions between two Cells
-     * @param cell_1 The first cell
-     * @param cell_2 The second cell
-     */
-    private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2) {
-        for(Sphere sphere_1 : cell_1.getSpheres()) {
-            for(Sphere sphere_2 : cell_2.getSpheres()) {
-                if(sphere_1 != sphere_2) solveCollisions(sphere_1,sphere_2);
-            }
-        }
-    }
-
-    /**
      * Solves the collision between two Spheres
      * First checks if they are even colliding, if so calculate in what direction they bounce of.
      * Also accounts Sphere weight
