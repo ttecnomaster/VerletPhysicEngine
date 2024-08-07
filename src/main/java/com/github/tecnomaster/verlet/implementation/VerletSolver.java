@@ -155,12 +155,21 @@ public class VerletSolver implements Solver {
      */
     private void solveCollisions(Sphere sphere_1, Sphere sphere_2) {
 
+        // calculate information on how the spheres relate
         double dx = sphere_1.getX() - sphere_2.getX();
         double dy = sphere_1.getY() - sphere_2.getY();
         double dLength = VectorUtil.length(dx,dy);
 
+        // Check if both spheres have the same position
+        if(dLength <= 0) {
+            sphere_1.setX(sphere_1.getX() + Math.random());
+            sphere_1.setY(sphere_2.getY() + Math.random());
+            return;
+        }
+
         final float combinedRadius = sphere_1.getRadius() + sphere_2.getRadius();
 
+        // gets executed if the spheres collide
         if(dLength < combinedRadius) {
             dx /= dLength;
             dy /= dLength;
