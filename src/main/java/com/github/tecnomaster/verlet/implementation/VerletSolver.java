@@ -3,8 +3,6 @@ package com.github.tecnomaster.verlet.implementation;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 import com.github.tecnomaster.verlet.*;
 
-import java.util.Arrays;
-
 /**
  * The VerletSolver an implementation of the {@link Solver}. It handles all the physics and ensures that the simulation is stepping correctly.
  * It allows to set sub steps who decide how many times the simulation is stepped between each step.

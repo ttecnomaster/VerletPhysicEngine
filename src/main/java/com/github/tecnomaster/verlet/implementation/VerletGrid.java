@@ -5,11 +5,8 @@ import com.github.tecnomaster.verlet.VerletContainer;
 import com.github.tecnomaster.verlet.Solver;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A VerletGrid defines an area and a radius in which collisions are performed.

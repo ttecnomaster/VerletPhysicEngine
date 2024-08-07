@@ -1,7 +1,5 @@
 package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.verlet.VerletContainer;
-
 public class VerletSolverThread extends Thread {
     private final int partitionIndex;
     private volatile boolean running;
