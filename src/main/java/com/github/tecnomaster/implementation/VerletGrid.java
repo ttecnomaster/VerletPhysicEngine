@@ -111,8 +111,8 @@ public class VerletGrid {
      * @param runnable The runnable which is called by all defined Cells
      */
     void invokeCellsSkipBordersAndNeighborCell(Cell2Runnable runnable) {
-        for(int i = 1; i < cells.length-1; i++) {
-            for(int j = 1; j < cells[i].length-1; j++) {
+        for(int i = 0; i < cells.length; i++) {
+            for(int j = 0; j < cells[i].length; j++) {
                 Cell oCell = cells[i][j];
                 invokeNeighborCells(i,j,(cell -> {
                     runnable.run(oCell,cell);
@@ -130,7 +130,7 @@ public class VerletGrid {
     void invokeNeighborCells(int x, int y, CellRunnable runnable) {
         for(int dy = -1; dy <= 1; dy++) {
             for(int dx = -1; dx <= 1; dx++) {
-                runnable.run(cells[x+dx][y+dy]);
+                if(validateCellPosition(x+dx, y+dy)) runnable.run(cells[x+dx][y+dy]);
             }
         }
     }
