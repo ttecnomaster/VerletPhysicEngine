@@ -18,7 +18,7 @@ import java.util.Set;
  * @see VerletSolver
  * @version 1.0.0
  */
-public class VerletGrid {
+public class VerletGrid implements MultiThreadingSupport {
     private final double x,y,width,height;
     private final float radius;
     private final Cell[][] cells;
@@ -107,10 +107,41 @@ public class VerletGrid {
         return x >= 0 && x < this.cells.length && y >= 0 && y < this.cells[0].length;
     }
 
+    @Override
+    public void solveCollisionPartition(int partitionIndex, int partitionCount, TwoSphereRunnable runnable) {
+        int totalCells = cells.length;
+        int partitionSize = (totalCells + partitionCount - 1) / partitionCount; // ceiling division to handle remainder cells
+        int start = partitionIndex * partitionSize;
+        int end = Math.min(start + partitionSize, totalCells);
+
+        for (int i = start; i < end; i++) {
+            for(int j = 0; j < cells[i].length; j++) {
+                Cell oCell = cells[i][j];
+                invokeNeighborCells(i,j,(cell -> {
+                    solveCellCollisions(oCell, cell, runnable);
+                }));
+            }
+        }
+    }
+
+    /**
+     * Solves the collisions between two Cells
+     * @param cell_1 The first cell
+     * @param cell_2 The second cell
+     */
+    private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2, TwoSphereRunnable runnable) {
+        for(Sphere sphere_1 : cell_1.getSpheres()) {
+            for(Sphere sphere_2 : cell_2.getSpheres()) {
+                if(sphere_1 != sphere_2) runnable.run(sphere_1,sphere_2);
+            }
+        }
+    }
+
     /**
      * Invokes every Cell, skipping border Cells, and calls the Neighbour Cells on this Cell in order to call the runnable on it
      * @param runnable The runnable which is called by all defined Cells
      */
+    @Deprecated
     void invokeCellsSkipBordersAndNeighborCell(Cell2Runnable runnable) {
         for(int i = 0; i < cells.length; i++) {
             for(int j = 0; j < cells[i].length; j++) {
