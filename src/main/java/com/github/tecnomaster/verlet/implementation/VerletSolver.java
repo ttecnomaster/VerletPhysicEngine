@@ -162,8 +162,8 @@ public class VerletSolver implements Solver {
 
         // Check if both spheres have the same position
         if(dLength <= 0) {
-            sphere_1.setX(sphere_1.getX() + Math.random());
-            sphere_1.setY(sphere_2.getY() + Math.random());
+            sphere_1.setX(sphere_1.getX() + Math.random() * sphere_1.getRadius() / 10);
+            sphere_1.setY(sphere_2.getY() + Math.random() * sphere_1.getRadius() / 10);
             return;
         }
 
