@@ -98,4 +98,18 @@ public class VerletScene implements Scene {
             runnable.run(constraints.get(i));
         }
     }
+
+    @Override
+    public void solveCollisionPartition(int partitionIndex, int partitionCount, TwoSphereRunnable runnable) {
+        int totalSpheres = spheres.size();
+        int partitionSize = (totalSpheres + partitionCount - 1) / partitionCount; // ceiling division to handle remainder spheres
+        int start = partitionIndex * partitionSize;
+        int end = Math.min(start + partitionSize, totalSpheres);
+
+        for(int i = start; i < end; i++) {
+            for(int j = i+1; j < spheres.size(); ++j) {
+                runnable.run(spheres.get(i),spheres.get(j));
+            }
+        }
+    }
 }

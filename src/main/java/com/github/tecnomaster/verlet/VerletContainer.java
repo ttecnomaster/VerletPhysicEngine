@@ -1,5 +1,6 @@
 package com.github.tecnomaster.verlet;
 
+import com.github.tecnomaster.verlet.implementation.MultiThreadingSupport;
 import com.github.tecnomaster.verlet.implementation.SphereRunnable;
 import com.github.tecnomaster.verlet.implementation.TwoSphereRunnable;
 import com.github.tecnomaster.verlet.implementation.VerletScene;
@@ -16,7 +17,7 @@ import com.github.tecnomaster.verlet.implementation.VerletScene;
  * @see VerletScene
  * @version 1.0.0
  */
-public interface VerletContainer {
+public interface VerletContainer extends MultiThreadingSupport {
 
     /**
      * Adds a Sphere to the VerletContainer

@@ -119,7 +119,7 @@ public class VerletSolver implements Solver {
      * Either solves collisions by comparing every Sphere with each other or by using the VerletGrid if one exists
      */
     private void solveCollisions() {
-        if(grid == null) container.invokeSpheresWithSpheres(this::solveCollisions);
+        if(grid == null) container.solveCollisionPartition(0, 1, this::solveCollisions);
         else solveCollisionsViaGrid();
     }
 
@@ -129,7 +129,7 @@ public class VerletSolver implements Solver {
      */
     private void solveCollisionsViaGrid() {
         grid.assignCells(container);
-        grid.invokeCellsSkipBordersAndNeighborCell(this::solveCellCollisions);
+        grid.solveCollisionPartition(0, 1, this::solveCollisions);
     }
 
     /**
