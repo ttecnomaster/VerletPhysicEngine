@@ -7,6 +7,7 @@ import com.github.tecnomaster.verlet.implementation.VerletSolver;
  * The Solver is the heart of the simulation. It handles all the physics and ensures that the simulation is stepping correctly.
  * It allows to set sub steps who decide how many times the simulation is stepped between each step.
  * It also allows to set a {@link VerletGrid} which can drastically improve performance.
+ * It allows to use multi-threading.
  * It requires a {@link VerletContainer} in order to run. If it gets a {@link Scene} it can also handle Constraints.
  *
  * @author tecno-master
@@ -28,6 +29,15 @@ public interface Solver {
      * @param grid The VerletGrid to use for the Solver. Can be null
      */
     void setGrid(VerletGrid grid);
+
+    /**
+     * Allows the user to use multi-threading for the solver.
+     * Multi-threading splits the collision checks over all the existing threads.
+     * Default value is 1. This means putting 1 as the amount of threads disables multi-threading
+     * and only uses one thread.
+     * @param threads the amount of threads the solver should use. Default is 1.
+     */
+    void setMultiThreading(int threads);
 
     /**
      * Sets the gravity of the solver.

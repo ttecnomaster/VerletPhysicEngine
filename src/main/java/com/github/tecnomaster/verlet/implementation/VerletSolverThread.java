@@ -5,11 +5,16 @@ import com.github.tecnomaster.verlet.VerletContainer;
 public class VerletSolverThread extends Thread {
     private final int partitionIndex;
     private volatile boolean running;
-    public volatile Runnable r;
+    private volatile Runnable r;
     public VerletSolverThread(int partitionIndex) {
         this.partitionIndex = partitionIndex;
         this.running = true;
         this.r = null;
+        start();
+    }
+
+    public boolean isReady() {
+        return r == null;
     }
 
     public void solve(MultiThreadingSupport solver, int partitionCount, TwoSphereRunnable runnable) {

@@ -3,10 +3,13 @@ package com.github.tecnomaster.verlet.implementation;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 import com.github.tecnomaster.verlet.*;
 
+import java.util.Arrays;
+
 /**
  * The VerletSolver an implementation of the {@link Solver}. It handles all the physics and ensures that the simulation is stepping correctly.
  * It allows to set sub steps who decide how many times the simulation is stepped between each step.
  * It also allows to set a {@link VerletGrid} which can drastically improve performance.
+ * It allows to use multi-threading.
  * It requires a {@link VerletContainer} in order to run. If it gets a {@link Scene} it can also handle Constraints.
  *
  * @author tecno-master
@@ -59,13 +62,25 @@ public class VerletSolver implements Solver {
         this.grid = grid;
     }
 
+    /**
+     * Allows the user to use multi-threading for the solver.
+     * Multi-threading splits the collision checks over all the existing threads.
+     * Default value is 1. This means putting 1 as the amount of threads disables multi-threading
+     * and only uses one thread.
+     * @param threads the amount of threads the solver should use. Default is 1.
+     */
+    @Override
     public void setMultiThreading(int threads) {
+        if(threads < 1) throw new IllegalArgumentException("Solver needs at least one Thread in order to run!");
+
+        // Shutdown all pre-existing threads
         for(VerletSolverThread thread : solverThreads) thread.shutdown();
+
+        // Create new threads. Uses this main thread as an additional solver thread.
         solverThreads = new VerletSolverThread[threads-1];
-        for(int i = 0; i < solverThreads.length; i++) {
-            solverThreads[i] = new VerletSolverThread(i+1);
-            solverThreads[i].start();
-        }
+
+        // Initializes all the threads
+        for(int i = 0; i < solverThreads.length; i++) solverThreads[i] = new VerletSolverThread(i+1);
     }
 
     /**
@@ -156,7 +171,7 @@ public class VerletSolver implements Solver {
         do {
             solving = false;
             for(VerletSolverThread thread : solverThreads) {
-                if (thread.r != null) {
+                if (!thread.isReady()) {
                     solving = true;
                     break;
                 }
