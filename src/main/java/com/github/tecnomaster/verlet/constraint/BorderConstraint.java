@@ -50,6 +50,24 @@ public class BorderConstraint implements SceneConstraint {
     }
 
     /**
+     * A Border is defined by four types, either TOP, BOTTOM, RIGHT or LEFT
+     *
+     * @return The type on which axis the border lies and on which side the sphere is allowed to exist.
+     */
+    public Type getType() {
+        return type;
+    }
+
+    /**
+     * The value defines the axis position that the border sits at.
+     *
+     * @return The value of the axis position that the border sits at.
+     */
+    public double getValue() {
+        return v;
+    }
+
+    /**
      * The type defines on which axis the border lies and on which side the sphere is allowed to exist.
      */
     public enum Type {

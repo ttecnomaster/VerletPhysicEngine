@@ -72,4 +72,44 @@ public class RectangleConstraint implements SceneConstraint {
         right.apply(sphere);
         left.apply(sphere);
     }
+
+    /**
+     * Uses the borders information in order to
+     * gather the original input information
+     *
+     * @return the specified X coordinate
+     */
+    public double getX() {
+        return left.getValue();
+    }
+
+    /**
+     * Uses the borders information in order to
+     * gather the original input information
+     *
+     * @return the specified Y coordinate
+     */
+    public double getY() {
+        return bottom.getValue();
+    }
+
+    /**
+     * Uses the borders information in order to
+     * gather the original input information
+     *
+     * @return the width of the <code>Rectangle</code>
+     */
+    public double getWidth() {
+        return right.getValue() - getX();
+    }
+
+    /**
+     * Uses the borders information in order to
+     * gather the original input information
+     *
+     * @return height the height of the <code>Rectangle</code>
+     */
+    public double getHeight() {
+        return top.getValue() - getY();
+    }
 }

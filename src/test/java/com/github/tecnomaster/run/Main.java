@@ -26,7 +26,9 @@ public class Main {
             scene.addSphere(new ColorSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25), new Color((int) (Math.random()*256),(int) (Math.random()*256),(int) (Math.random()*256))));
         }
 
-        scene.addConstraint(new RectangleConstraint(1920-50, 1080-50));
+        //scene.addConstraint(new RectangleConstraint(1920, 1080));
+        scene.addConstraint(new CircleAreaConstraint(0,0, 500));
+        scene.addConstraint(new RectangleConstraint(450*2,450*2));
 
         VerletPanel panel = new VerletPanel(scene);
 
@@ -66,11 +68,11 @@ public class Main {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            if(container instanceof Scene) ((Scene)container).invokeConstraints(constraint -> drawConstraint(constraint, g));
+
             container.invokeSpheres(sphere -> {
                 drawSphere(sphere,g);
             });
-
-            if(container instanceof Scene) ((Scene)container).invokeConstraints(constraint -> drawConstraint(constraint, g));
         }
 
         private void drawSphere(Sphere sphere, Graphics g) {
@@ -85,6 +87,10 @@ public class Main {
                 CircleAreaConstraint circleAreaConstraint = (CircleAreaConstraint)constraint;
                 int radius = (int) circleAreaConstraint.getRadius();
                 g.drawOval(translateX(circleAreaConstraint.getX()) - radius, translateY(circleAreaConstraint.getY()) - radius, radius * 2, radius * 2);
+            }
+            if(constraint instanceof RectangleConstraint) {
+                RectangleConstraint rectangleConstraint = (RectangleConstraint) constraint;
+                g.drawRect(translateX(rectangleConstraint.getX()), translateY(rectangleConstraint.getY()) - (int) rectangleConstraint.getHeight(), (int) rectangleConstraint.getWidth(), (int) rectangleConstraint.getHeight());
             }
         }
 
