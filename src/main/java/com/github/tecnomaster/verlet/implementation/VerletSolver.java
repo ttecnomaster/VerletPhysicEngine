@@ -21,6 +21,7 @@ public class VerletSolver implements Solver {
     private VerletGrid grid;
     private double gx,gy = -1000;
     private boolean enableCollisions;
+    private VerletSolverThread[] solverThreads;
 
     /**
      * Cannot be instanced! <br>
@@ -29,6 +30,7 @@ public class VerletSolver implements Solver {
     private VerletSolver() {
         this.subSteps = 1;
         this.enableCollisions = true;
+        this.solverThreads = new VerletSolverThread[0];
     }
 
     /**
@@ -55,6 +57,15 @@ public class VerletSolver implements Solver {
     @Override
     public void setGrid(VerletGrid grid) {
         this.grid = grid;
+    }
+
+    public void setMultiThreading(int threads) {
+        for(VerletSolverThread thread : solverThreads) thread.shutdown();
+        solverThreads = new VerletSolverThread[threads-1];
+        for(int i = 0; i < solverThreads.length; i++) {
+            solverThreads[i] = new VerletSolverThread(i+1);
+            solverThreads[i].start();
+        }
     }
 
     /**
@@ -119,8 +130,13 @@ public class VerletSolver implements Solver {
      * Either solves collisions by comparing every Sphere with each other or by using the VerletGrid if one exists
      */
     private void solveCollisions() {
-        if(grid == null) container.solveCollisionPartition(0, 1, this::solveCollisions);
+        if(grid == null) solveViaClassic();
         else solveCollisionsViaGrid();
+    }
+
+    private void solveViaClassic() {
+        container.solveCollisionPartition(0, solverThreads.length+1, this::solveCollisions);
+        for(VerletSolverThread thread : solverThreads) thread.solve(container, solverThreads.length+1, this::solveCollisions);
     }
 
     /**
@@ -129,7 +145,23 @@ public class VerletSolver implements Solver {
      */
     private void solveCollisionsViaGrid() {
         grid.assignCells(container);
-        grid.solveCollisionPartition(0, 1, this::solveCollisions);
+
+        grid.solveCollisionPartition(0, solverThreads.length+1, this::solveCollisions);
+
+        for(VerletSolverThread thread : solverThreads) {
+            thread.solve(grid, solverThreads.length+1, this::solveCollisions);
+        }
+
+        boolean solving;
+        do {
+            solving = false;
+            for(VerletSolverThread thread : solverThreads) {
+                if (thread.r != null) {
+                    solving = true;
+                    break;
+                }
+            }
+        } while (solving);
     }
 
     /**

@@ -5,8 +5,11 @@ import com.github.tecnomaster.verlet.VerletContainer;
 import com.github.tecnomaster.verlet.Solver;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A VerletGrid defines an area and a radius in which collisions are performed.
@@ -129,6 +132,13 @@ public class VerletGrid implements MultiThreadingSupport {
      * @param cell_1 The first cell
      * @param cell_2 The second cell
      */
+//    private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2, TwoSphereRunnable runnable) {
+//        for(int i = 0; i < cell_1.spheres.size(); i++) {
+//            for(int j = 0; j < cell_2.spheres.size(); j++) {
+//                if(cell_1.spheres.get(i) != cell_2.spheres.get(j)) runnable.run(cell_1.spheres.get(i), cell_2.spheres.get(j));
+//            }
+//        }
+//    }
     private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2, TwoSphereRunnable runnable) {
         for(Sphere sphere_1 : cell_1.getSpheres()) {
             for(Sphere sphere_2 : cell_2.getSpheres()) {

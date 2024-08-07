@@ -5,6 +5,8 @@ import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
 import com.github.tecnomaster.verlet.custom.CustomSphere;
 import com.github.tecnomaster.verlet.implementation.VerletGrid;
 import com.github.tecnomaster.verlet.*;
+import com.github.tecnomaster.verlet.implementation.VerletSolver;
+import com.github.tecnomaster.verlet.utils.VectorUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +22,17 @@ public class Main {
         Solver solver = Verlet.createSolver(scene);
 
         solver.setSubSteps(8);
-        solver.setGrid(new VerletGrid(1920,1080, 25));
+        solver.setGrid(new VerletGrid(1920,1080, 8));
+        ((VerletSolver)solver).setMultiThreading(8);
 
-        for(int i = 0; i < 180; i++) {
-            scene.addSphere(new ColorSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25), new Color((int) (Math.random()*256),(int) (Math.random()*256),(int) (Math.random()*256))));
+        for(int i = 0; i < 5000; i++) {
+            //scene.addSphere(new ColorSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25), new Color((int) (Math.random()*256),(int) (Math.random()*256),(int) (Math.random()*256))));
+            scene.addSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, (float) (6+Math.random()*2)));
         }
 
-        //scene.addConstraint(new RectangleConstraint(1920, 1080));
-        scene.addConstraint(new CircleAreaConstraint(0,0, 500));
-        scene.addConstraint(new RectangleConstraint(450*2,450*2));
+        scene.addConstraint(new RectangleConstraint(1920-100, 1080-100));
+//        scene.addConstraint(new CircleAreaConstraint(0,0, 500));
+//        scene.addConstraint(new RectangleConstraint(450*2,450*2));
 
         VerletPanel panel = new VerletPanel(scene);
 
@@ -37,7 +41,6 @@ public class Main {
         frame.setVisible(true);
 
         new Runner(60, () -> {
-
             solver.step(0.02f);
             panel.repaint();
 
@@ -77,8 +80,10 @@ public class Main {
 
         private void drawSphere(Sphere sphere, Graphics g) {
             int radius = (int) sphere.getRadius();
-            if(sphere instanceof ColorSphere) g.setColor(((ColorSphere)sphere).getColor());
-            else g.setColor(Color.BLACK);
+//            if(sphere instanceof ColorSphere) g.setColor(((ColorSphere)sphere).getColor());
+//            else g.setColor(Color.BLACK);
+            double velocity = VectorUtil.length(sphere.getX() - sphere.getOldX(), sphere.getY() - sphere.getOldY());
+            g.setColor(new Color((int) Math.min(velocity*1000, 255),25, 25));
             g.fillOval(translateX(sphere.getX()) - radius, translateY(sphere.getY()) - radius, radius*2, radius*2);
         }
 
