@@ -1,7 +1,7 @@
-package com.github.tecnomaster.constraint;
+package com.github.tecnomaster.verlet.constraint;
 
-import com.github.tecnomaster.SceneConstraint;
-import com.github.tecnomaster.Sphere;
+import com.github.tecnomaster.verlet.SceneConstraint;
+import com.github.tecnomaster.verlet.Sphere;
 
 import java.awt.*;
 

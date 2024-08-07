@@ -1,10 +1,10 @@
 package com.github.tecnomaster.run;
 
-import com.github.tecnomaster.*;
-import com.github.tecnomaster.constraint.CircleAreaConstraint;
-import com.github.tecnomaster.constraint.RectangleConstraint;
-import com.github.tecnomaster.custom.CustomSphere;
-import com.github.tecnomaster.implementation.VerletGrid;
+import com.github.tecnomaster.verlet.constraint.CircleAreaConstraint;
+import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
+import com.github.tecnomaster.verlet.custom.CustomSphere;
+import com.github.tecnomaster.verlet.implementation.VerletGrid;
+import com.github.tecnomaster.verlet.*;
 
 import javax.swing.*;
 import java.awt.*;

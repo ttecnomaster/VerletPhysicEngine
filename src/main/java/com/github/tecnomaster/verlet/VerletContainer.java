@@ -1,7 +1,8 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
-import com.github.tecnomaster.implementation.SphereRunnable;
-import com.github.tecnomaster.implementation.TwoSphereRunnable;
+import com.github.tecnomaster.verlet.implementation.SphereRunnable;
+import com.github.tecnomaster.verlet.implementation.TwoSphereRunnable;
+import com.github.tecnomaster.verlet.implementation.VerletScene;
 
 /**
  * A VerletContainer is Container that holds and handles Spheres.
@@ -12,7 +13,7 @@ import com.github.tecnomaster.implementation.TwoSphereRunnable;
  * @author tecno-master
  * @see Solver
  * @see Scene
- * @see com.github.tecnomaster.implementation.VerletScene
+ * @see VerletScene
  * @version 1.0.0
  */
 public interface VerletContainer {

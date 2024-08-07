@@ -1,4 +1,7 @@
-package com.github.tecnomaster.utils;
+package com.github.tecnomaster.verlet.utils;
+
+import com.github.tecnomaster.verlet.Constraint;
+import com.github.tecnomaster.verlet.Solver;
 
 /**
  * VectorUtil class is a util class that provides methods for calculating with Vectors.
@@ -6,8 +9,8 @@ package com.github.tecnomaster.utils;
  * The Solver and Constraints often need to calculate with Vectors.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Constraint
- * @see com.github.tecnomaster.Solver
+ * @see Constraint
+ * @see Solver
  * @version 1.0.0
  */
 public class VectorUtil {

@@ -1,8 +1,9 @@
-package com.github.tecnomaster.constraint;
+package com.github.tecnomaster.verlet.constraint;
 
-import com.github.tecnomaster.SceneConstraint;
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.utils.VectorUtil;
+import com.github.tecnomaster.verlet.SceneConstraint;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.utils.VectorUtil;
+import com.github.tecnomaster.verlet.Constraint;
 
 /**
  * The CircleAreaConstraint is a type of {@link SceneConstraint} and forces every Sphere to stay inside a defined circle.
@@ -10,7 +11,7 @@ import com.github.tecnomaster.utils.VectorUtil;
  * If the outcome is bigger than 0 then the Sphere needs to be moved back into the circle.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Constraint
+ * @see Constraint
  * @see SceneConstraint
  * @version 1.0.0
  */

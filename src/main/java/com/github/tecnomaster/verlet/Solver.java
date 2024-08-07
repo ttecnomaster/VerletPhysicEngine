@@ -1,6 +1,7 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
-import com.github.tecnomaster.implementation.VerletGrid;
+import com.github.tecnomaster.verlet.implementation.VerletGrid;
+import com.github.tecnomaster.verlet.implementation.VerletSolver;
 
 /**
  * The Solver is the heart of the simulation. It handles all the physics and ensures that the simulation is stepping correctly.
@@ -9,7 +10,7 @@ import com.github.tecnomaster.implementation.VerletGrid;
  * It requires a {@link VerletContainer} in order to run. If it gets a {@link Scene} it can also handle Constraints.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.implementation.VerletSolver
+ * @see VerletSolver
  * @see VerletGrid
  * @see VerletContainer
  * @version 1.0.0

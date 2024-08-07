@@ -1,4 +1,4 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
 /**
  * A StaticConstraint gets applied once per simulation step.

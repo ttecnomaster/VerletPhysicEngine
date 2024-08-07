@@ -1,4 +1,4 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
 /**
  * A Constraint is used to modify the behaviour of Spheres in a Scene.

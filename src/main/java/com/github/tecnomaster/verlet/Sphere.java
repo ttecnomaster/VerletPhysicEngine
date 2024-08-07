@@ -1,4 +1,6 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
+
+import com.github.tecnomaster.verlet.implementation.VerletSphere;
 
 /**
  * A Sphere a Physic Object in the simulation. It is added to a {@link VerletContainer} and solved by the {@link Solver}.
@@ -8,7 +10,7 @@ package com.github.tecnomaster;
  * Gravity uses the accelerate method in order to add downwards momentum
  *
  * @author tecno-master
- * @see com.github.tecnomaster.implementation.VerletSphere
+ * @see VerletSphere
  * @see VerletContainer
  * @see Solver
  * @version 1.0.0

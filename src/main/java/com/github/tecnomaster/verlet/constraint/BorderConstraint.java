@@ -1,7 +1,8 @@
-package com.github.tecnomaster.constraint;
+package com.github.tecnomaster.verlet.constraint;
 
-import com.github.tecnomaster.SceneConstraint;
-import com.github.tecnomaster.Sphere;
+import com.github.tecnomaster.verlet.SceneConstraint;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.Constraint;
 
 /**
  * The BorderConstraint is a type of {@link SceneConstraint} and ensures that no sphere will go past a certain point.
@@ -12,7 +13,7 @@ import com.github.tecnomaster.Sphere;
  * Same principle for RIGHT and LEFT
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Constraint
+ * @see Constraint
  * @see SceneConstraint
  * @version 1.0.0
  */

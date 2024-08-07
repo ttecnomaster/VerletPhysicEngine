@@ -1,7 +1,7 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.*;
-import com.github.tecnomaster.utils.VectorUtil;
+import com.github.tecnomaster.verlet.utils.VectorUtil;
+import com.github.tecnomaster.verlet.*;
 
 /**
  * The VerletSolver an implementation of the {@link Solver}. It handles all the physics and ensures that the simulation is stepping correctly.

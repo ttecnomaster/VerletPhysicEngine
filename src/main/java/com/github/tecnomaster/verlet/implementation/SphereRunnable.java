@@ -1,14 +1,15 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.Sphere;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.VerletContainer;
 
 /**
  * This interface is used for running a Runnable with a Sphere as a parameter.
- * This is primarily used by the {@link com.github.tecnomaster.VerletContainer#invokeSpheres(SphereRunnable)} method.
+ * This is primarily used by the {@link VerletContainer#invokeSpheres(SphereRunnable)} method.
  * As a functional interface this should be used with lambda only.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.VerletContainer
+ * @see VerletContainer
  * @version 1.0.0
  */
 @FunctionalInterface

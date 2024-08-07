@@ -1,7 +1,7 @@
-package com.github.tecnomaster.custom;
+package com.github.tecnomaster.verlet.custom;
 
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.Verlet;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.Verlet;
 
 /**
  * The CustomSphere is an implementation of the {@link Sphere} interface

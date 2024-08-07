@@ -1,14 +1,15 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.Constraint;
+import com.github.tecnomaster.verlet.Constraint;
+import com.github.tecnomaster.verlet.Scene;
 
 /**
  * This interface is used for running a Runnable with a Constraint as a parameter.
- * This is primarily used by the {@link com.github.tecnomaster.Scene#invokeConstraints(ConstraintRunnable)} method.
+ * This is primarily used by the {@link Scene#invokeConstraints(ConstraintRunnable)} method.
  * As a functional interface this should be used with lambda only.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Scene
+ * @see Scene
  * @version 1.0.0
  */
 @FunctionalInterface

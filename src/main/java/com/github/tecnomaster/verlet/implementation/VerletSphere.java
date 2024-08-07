@@ -1,9 +1,9 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.Solver;
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.Verlet;
-import com.github.tecnomaster.VerletContainer;
+import com.github.tecnomaster.verlet.Solver;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.Verlet;
+import com.github.tecnomaster.verlet.VerletContainer;
 
 /**
  * VerletSphere is an implementation of the {@link Sphere} interface. It is added to a {@link VerletContainer} and solved by the {@link Solver}.

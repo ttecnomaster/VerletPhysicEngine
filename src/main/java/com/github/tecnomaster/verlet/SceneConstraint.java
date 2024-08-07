@@ -1,4 +1,4 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
 /**
  * A SceneConstraint is called on every Sphere each simulation step.

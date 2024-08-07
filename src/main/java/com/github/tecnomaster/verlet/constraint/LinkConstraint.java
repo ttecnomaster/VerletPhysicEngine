@@ -1,17 +1,19 @@
-package com.github.tecnomaster.constraint;
+package com.github.tecnomaster.verlet.constraint;
 
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.StaticConstraint;
-import com.github.tecnomaster.utils.VectorUtil;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.StaticConstraint;
+import com.github.tecnomaster.verlet.utils.VectorUtil;
+import com.github.tecnomaster.verlet.Constraint;
+import com.github.tecnomaster.verlet.Scene;
 
 /**
  * The LinkConstraint is a type of {@link StaticConstraint} and links together two Spheres.
- * Those Spheres will always be together as lang as the Constraint exists in the {@link com.github.tecnomaster.Scene}.
+ * Those Spheres will always be together as lang as the Constraint exists in the {@link Scene}.
  * You can link multiple Spheres together forming all kinds of shapes (form a box with links).
  * It calculates the {@link VectorUtil#length(double, double)} between those two Spheres, subtracts the combined radius and moves Spheres depending on the outcome.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Constraint
+ * @see Constraint
  * @see StaticConstraint
  * @version 1.0.0
  */

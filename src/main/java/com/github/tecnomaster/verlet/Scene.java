@@ -1,6 +1,7 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
-import com.github.tecnomaster.implementation.ConstraintRunnable;
+import com.github.tecnomaster.verlet.implementation.ConstraintRunnable;
+import com.github.tecnomaster.verlet.implementation.VerletScene;
 
 /**
  * A Scene is a type of {@link VerletContainer} that can also handle Constraints.
@@ -8,7 +9,7 @@ import com.github.tecnomaster.implementation.ConstraintRunnable;
  * A Scene can add, remove and invoke Constraints.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.implementation.VerletScene
+ * @see VerletScene
  * @see VerletContainer
  * @version 1.0.0
  */

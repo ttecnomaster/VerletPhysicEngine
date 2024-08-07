@@ -1,16 +1,17 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.Sphere;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.VerletContainer;
 
 /**
  * This interface is used for running a Runnable with two Spheres as parameters.
- * This is primarily used by the {@link com.github.tecnomaster.VerletContainer#invokeSpheresWithSpheres(TwoSphereRunnable)} method.
+ * This is primarily used by the {@link VerletContainer#invokeSpheresWithSpheres(TwoSphereRunnable)} method.
  * The intentional use for this interface is to perform actions which requires two Spheres.
  * An example for such an action would be the {@link VerletSolver#solveCollisions(Sphere, Sphere)} method.
  * As a functional interface this should be used with lambda only.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.VerletContainer
+ * @see VerletContainer
  * @see VerletSolver
  * @version 1.0.0
  */

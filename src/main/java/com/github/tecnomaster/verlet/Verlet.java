@@ -1,8 +1,8 @@
-package com.github.tecnomaster;
+package com.github.tecnomaster.verlet;
 
-import com.github.tecnomaster.implementation.VerletScene;
-import com.github.tecnomaster.implementation.VerletSolver;
-import com.github.tecnomaster.implementation.VerletSphere;
+import com.github.tecnomaster.verlet.implementation.VerletScene;
+import com.github.tecnomaster.verlet.implementation.VerletSolver;
+import com.github.tecnomaster.verlet.implementation.VerletSphere;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,7 +1,8 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.VerletContainer;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.VerletContainer;
+import com.github.tecnomaster.verlet.Solver;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -9,11 +10,11 @@ import java.util.Set;
 
 /**
  * A VerletGrid defines an area and a radius in which collisions are performed.
- * Adding a VerletGrid to a {@link com.github.tecnomaster.Solver} can drastically increase performance.
+ * Adding a VerletGrid to a {@link Solver} can drastically increase performance.
  * The radius defines the size of one grid cell. No Sphere is allowed to be bigger than that defined radius
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Solver
+ * @see Solver
  * @see VerletSolver
  * @version 1.0.0
  */

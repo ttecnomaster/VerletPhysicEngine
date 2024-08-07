@@ -1,6 +1,6 @@
-package com.github.tecnomaster.implementation;
+package com.github.tecnomaster.verlet.implementation;
 
-import com.github.tecnomaster.*;
+import com.github.tecnomaster.verlet.*;
 
 import java.util.ArrayList;
 import java.util.List;

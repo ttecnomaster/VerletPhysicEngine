@@ -1,7 +1,8 @@
-package com.github.tecnomaster.constraint;
+package com.github.tecnomaster.verlet.constraint;
 
-import com.github.tecnomaster.Sphere;
-import com.github.tecnomaster.StaticConstraint;
+import com.github.tecnomaster.verlet.Sphere;
+import com.github.tecnomaster.verlet.StaticConstraint;
+import com.github.tecnomaster.verlet.Constraint;
 
 /**
  * The LinkConstraint is a type of {@link StaticConstraint} and turns a Sphere completely static.
@@ -10,7 +11,7 @@ import com.github.tecnomaster.StaticConstraint;
  * Besides staying in the same place forever it functions like a normal Sphere.
  *
  * @author tecno-master
- * @see com.github.tecnomaster.Constraint
+ * @see Constraint
  * @see StaticConstraint
  * @version 1.0.0
  */
