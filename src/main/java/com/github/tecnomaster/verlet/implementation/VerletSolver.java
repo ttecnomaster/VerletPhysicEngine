@@ -164,7 +164,17 @@ public class VerletSolver implements Solver {
         for(VerletSolverThread thread : solverThreads) {
             thread.solve(grid, solverThreads.length+1, this::solveCollisions);
         }
+        waitUntilThreadsAreFinished();
+    }
 
+    /**
+     * Loops so long until all {@link VerletSolverThread} threads are done
+     * with their collision-check-loops.
+     * Uses the {@link VerletSolverThread#isReady()} method in order to check
+     * if a thread is ready. Only when all threads are ready, the main thread continues.<br>
+     * If there are no additional threads - instantly continues
+     */
+    private void waitUntilThreadsAreFinished() {
         boolean solving;
         do {
             solving = false;
