@@ -8,6 +8,8 @@ public class Demo {
 
         Scene scene = Verlet.createScene();
 
+        scene.addSphere(Verlet.createSphere(0, 0, 25));
+
         new DemoFrame(scene);
 
     }
