@@ -5,7 +5,7 @@ import com.github.tecnomaster.verlet.VerletContainer;
 
 /**
  * This interface is used for running a Runnable with two Spheres as parameters.
- * This is primarily used by the {@link VerletContainer#invokeSpheresWithSpheres(TwoSphereRunnable)} method.
+ * This is primarily used by the {@link MultiThreadingSupport#solveCollisionPartition(int, int, TwoSphereRunnable)} (TwoSphereRunnable)} method.
  * The intentional use for this interface is to perform actions which requires two Spheres.
  * An example for such an action would be the {@link VerletSolver#solveCollisions(Sphere, Sphere)} method.
  * As a functional interface this should be used with lambda only.

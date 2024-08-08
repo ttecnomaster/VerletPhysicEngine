@@ -80,6 +80,7 @@ public class VerletScene implements Scene {
      * @param runnable The Runnable which is called by every Sphere Pairs
      */
     @Override
+    @Deprecated
     public void invokeSpheresWithSpheres(TwoSphereRunnable runnable) {
         for(int i = 0; i < spheres.size(); ++i) {
             for(int j = i+1; j < spheres.size(); ++j) {
@@ -96,6 +97,28 @@ public class VerletScene implements Scene {
     public void invokeConstraints(ConstraintRunnable runnable) {
         for(int i = 0; i < constraints.size(); i++) {
             runnable.run(constraints.get(i));
+        }
+    }
+
+    /**
+     * Implementing this method means,
+     * that individual threads can access and call it in order to solve the correct partition part spheres.
+     * Most implementations use a split up "for loop".
+     * @param partitionIndex The index of the partition. Is it the first part? Is it the last part?
+     * @param partitionCount The total amount of partitions/threads. Can be specified by {@link com.github.tecnomaster.verlet.Solver#setMultiThreading(int)}
+     * @param runnable The runnable that should run on two spheres which are tested for a collision
+     */
+    @Override
+    public void solveCollisionPartition(int partitionIndex, int partitionCount, TwoSphereRunnable runnable) {
+        int totalSpheres = spheres.size();
+        int partitionSize = (totalSpheres + partitionCount - 1) / partitionCount; // ceiling division to handle remainder spheres
+        int start = partitionIndex * partitionSize;
+        int end = Math.min(start + partitionSize, totalSpheres);
+
+        for(int i = start; i < end; i++) {
+            for(int j = i+1; j < spheres.size(); ++j) {
+                runnable.run(spheres.get(i),spheres.get(j));
+            }
         }
     }
 }

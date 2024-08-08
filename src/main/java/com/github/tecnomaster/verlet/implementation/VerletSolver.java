@@ -7,6 +7,7 @@ import com.github.tecnomaster.verlet.*;
  * The VerletSolver an implementation of the {@link Solver}. It handles all the physics and ensures that the simulation is stepping correctly.
  * It allows to set sub steps who decide how many times the simulation is stepped between each step.
  * It also allows to set a {@link VerletGrid} which can drastically improve performance.
+ * It allows to use multi-threading.
  * It requires a {@link VerletContainer} in order to run. If it gets a {@link Scene} it can also handle Constraints.
  *
  * @author tecno-master
@@ -21,6 +22,7 @@ public class VerletSolver implements Solver {
     private VerletGrid grid;
     private double gx,gy = -1000;
     private boolean enableCollisions;
+    private VerletSolverThread[] solverThreads;
 
     /**
      * Cannot be instanced! <br>
@@ -29,6 +31,7 @@ public class VerletSolver implements Solver {
     private VerletSolver() {
         this.subSteps = 1;
         this.enableCollisions = true;
+        this.solverThreads = new VerletSolverThread[0];
     }
 
     /**
@@ -55,6 +58,27 @@ public class VerletSolver implements Solver {
     @Override
     public void setGrid(VerletGrid grid) {
         this.grid = grid;
+    }
+
+    /**
+     * Allows the user to use multi-threading for the solver.
+     * Multi-threading splits the collision checks over all the existing threads.
+     * Default value is 1. This means putting 1 as the amount of threads disables multi-threading
+     * and only uses one thread.
+     * @param threads the amount of threads the solver should use. Default is 1.
+     */
+    @Override
+    public void setMultiThreading(int threads) {
+        if(threads < 1) throw new IllegalArgumentException("Solver needs at least one Thread in order to run!");
+
+        // Shutdown all pre-existing threads
+        for(VerletSolverThread thread : solverThreads) thread.shutdown();
+
+        // Create new threads. Uses this main thread as an additional solver thread.
+        solverThreads = new VerletSolverThread[threads-1];
+
+        // Initializes all the threads
+        for(int i = 0; i < solverThreads.length; i++) solverThreads[i] = new VerletSolverThread(i+1);
     }
 
     /**
@@ -119,8 +143,13 @@ public class VerletSolver implements Solver {
      * Either solves collisions by comparing every Sphere with each other or by using the VerletGrid if one exists
      */
     private void solveCollisions() {
-        if(grid == null) container.invokeSpheresWithSpheres(this::solveCollisions);
+        if(grid == null) solveViaClassic();
         else solveCollisionsViaGrid();
+    }
+
+    private void solveViaClassic() {
+        container.solveCollisionPartition(0, solverThreads.length+1, this::solveCollisions);
+        for(VerletSolverThread thread : solverThreads) thread.solve(container, solverThreads.length+1, this::solveCollisions);
     }
 
     /**
@@ -129,20 +158,33 @@ public class VerletSolver implements Solver {
      */
     private void solveCollisionsViaGrid() {
         grid.assignCells(container);
-        grid.invokeCellsSkipBordersAndNeighborCell(this::solveCellCollisions);
+
+        grid.solveCollisionPartition(0, solverThreads.length+1, this::solveCollisions);
+
+        for(VerletSolverThread thread : solverThreads) {
+            thread.solve(grid, solverThreads.length+1, this::solveCollisions);
+        }
+        waitUntilThreadsAreFinished();
     }
 
     /**
-     * Solves the collisions between two Cells
-     * @param cell_1 The first cell
-     * @param cell_2 The second cell
+     * Loops so long until all {@link VerletSolverThread} threads are done
+     * with their collision-check-loops.
+     * Uses the {@link VerletSolverThread#isReady()} method in order to check
+     * if a thread is ready. Only when all threads are ready, the main thread continues.<br>
+     * If there are no additional threads - instantly continues
      */
-    private void solveCellCollisions(VerletGrid.Cell cell_1, VerletGrid.Cell cell_2) {
-        for(Sphere sphere_1 : cell_1.getSpheres()) {
-            for(Sphere sphere_2 : cell_2.getSpheres()) {
-                if(sphere_1 != sphere_2) solveCollisions(sphere_1,sphere_2);
+    private void waitUntilThreadsAreFinished() {
+        boolean solving;
+        do {
+            solving = false;
+            for(VerletSolverThread thread : solverThreads) {
+                if (!thread.isReady()) {
+                    solving = true;
+                    break;
+                }
             }
-        }
+        } while (solving);
     }
 
     /**
