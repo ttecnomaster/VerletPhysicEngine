@@ -3,8 +3,11 @@ package com.github.tecnomaster.demo;
 import com.github.tecnomaster.verlet.custom.CustomSphere;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DemoSphere extends CustomSphere {
+    private final static boolean TRAIL = true;
     private boolean cMode, hMode;
     public DemoSphere(double x, double y, float radius) {
         super(x, y, radius);

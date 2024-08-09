@@ -22,7 +22,10 @@ public class DemoRenderer {
     }
 
     private void renderSphere(Graphics2D g, Sphere sphere) {
-        if(sphere instanceof DemoSphere) g.setColor(((DemoSphere)sphere).getColor());
+        if(sphere instanceof DemoSphere) {
+            DemoSphere demoSphere = (DemoSphere) sphere;
+            g.setColor(demoSphere.getColor());
+        }
         else g.setColor(Color.DARK_GRAY);
         drawSphere(g, false, sphere.getX(), sphere.getY(), sphere.getRadius());
     }

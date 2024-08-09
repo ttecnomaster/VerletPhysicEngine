@@ -6,12 +6,10 @@ import com.github.tecnomaster.verlet.Sphere;
 import com.github.tecnomaster.verlet.Verlet;
 import com.github.tecnomaster.verlet.constraint.LinkConstraint;
 import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
-import com.github.tecnomaster.verlet.implementation.TwoSphereRunnable;
+import com.github.tecnomaster.verlet.implementation.VerletGrid;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
-import sun.awt.image.ImageWatched;
 
 import java.awt.*;
-import java.util.List;
 
 public class Demo {
     public static void main(String[] args) {
@@ -27,7 +25,7 @@ public class Demo {
         DemoFrame frame = new DemoFrame(scene);
 
         Solver solver = Verlet.createSolver(scene);
-
+        solver.setGrid(new VerletGrid(1920, 1080, 75));
         solver.setSubSteps(8);
 
         scene.addConstraint(new RectangleConstraint(1920 - 75,1080 - 100));
