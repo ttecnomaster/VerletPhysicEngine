@@ -6,6 +6,7 @@ import com.github.tecnomaster.verlet.Sphere;
 import com.github.tecnomaster.verlet.Verlet;
 import com.github.tecnomaster.verlet.constraint.LinkConstraint;
 import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
+import com.github.tecnomaster.verlet.implementation.TwoSphereRunnable;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 import sun.awt.image.ImageWatched;
 
@@ -72,22 +73,14 @@ public class Demo {
             scene.addSphere(sphere);
         }
 
-//        for(int i = 1; i < spheres1.length; i++) {
-//            scene.addConstraint(new LinkConstraint(spheres1[i], spheres1[i-1]));
-//        }
-//        scene.addConstraint(new LinkConstraint(spheres1[0], spheres1[spheres1.length-1]));
-//
-//        double length = VectorUtil.length(1,1) * radius * (spheres+1) * 2;
-//        scene.addConstraint(new LinkConstraint(spheres1[0], spheres1[(spheres+1)*2], length));
-//        scene.addConstraint(new LinkConstraint(spheres1[(spheres+1)], spheres1[(spheres+1)*3], length));
-
-        for(Sphere sphere : spheres1) {
-            for(Sphere sphere1 : spheres1) {
-                if(sphere == sphere1) continue;
-                double length = VectorUtil.length(sphere.getX() - sphere1.getX(), sphere.getY() - sphere1.getY());
-                scene.addConstraint(new LinkConstraint(sphere1, sphere, length));
-            }
+        for(int i = 1; i < spheres1.length; i++) {
+            scene.addConstraint(new LinkConstraint(spheres1[i], spheres1[i-1]));
         }
+        scene.addConstraint(new LinkConstraint(spheres1[0], spheres1[spheres1.length-1]));
+
+        double length = VectorUtil.length(1,1) * radius * (spheres+1) * 2;
+        scene.addConstraint(new LinkConstraint(spheres1[0], spheres1[(spheres+1)*2], length));
+        scene.addConstraint(new LinkConstraint(spheres1[(spheres+1)], spheres1[(spheres+1)*3], length));
 
     }
 }
