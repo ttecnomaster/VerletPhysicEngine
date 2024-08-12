@@ -6,6 +6,7 @@ import com.github.tecnomaster.verlet.Solver;
 import com.github.tecnomaster.verlet.constraint.CircleAreaConstraint;
 import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
 import com.github.tecnomaster.verlet.implementation.SphereRunnable;
+import com.github.tecnomaster.verlet.implementation.VerletGrid;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 
 import javax.swing.*;
@@ -87,6 +88,7 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
         if(borderConstraint != null) scene.removeConstraint(borderConstraint);
 
         // VerletGrid
+        solver.setGrid(new VerletGrid(getPanelDimension().width, getPanelDimension().height, SettingsPanel.MAXIMUM_SPHERE_RADIUS));
 
         // Border Constraint
         int borderType = settings.getBorderType();

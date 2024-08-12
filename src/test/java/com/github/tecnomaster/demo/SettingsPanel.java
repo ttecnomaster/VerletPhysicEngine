@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class SettingsPanel extends JPanel {
+    public static final float MINIMUM_SPHERE_RADIUS = 10;
+    public static final float MAXIMUM_SPHERE_RADIUS = 75;
     private final DemoFrame demoFrame;
     private int borderType;
     private TestSceneRenderer testSceneRenderer;
@@ -110,7 +112,7 @@ public class SettingsPanel extends JPanel {
 
         coreSettings.add(Box.createVerticalStrut(10));
 
-        size = new JSlider(10,75,25);
+        size = new JSlider((int) MINIMUM_SPHERE_RADIUS, (int) MAXIMUM_SPHERE_RADIUS,25);
         size.addChangeListener(l -> updateTestScene(objectType));
 
         coreSettings.add(new JLabel("Size:"));
