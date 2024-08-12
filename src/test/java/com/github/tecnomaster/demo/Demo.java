@@ -42,6 +42,8 @@ public class Demo {
             solver.step(0.02f);
             frame.render();
 
+            // Remove any sphere that is out of bounds
+
         }).run();
 
     }

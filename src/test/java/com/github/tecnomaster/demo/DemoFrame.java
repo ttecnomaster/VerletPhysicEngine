@@ -11,6 +11,7 @@ import com.github.tecnomaster.verlet.utils.VectorUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 public class DemoFrame extends JFrame implements MouseListener, MouseMotionListener {
     private final JPanel panel;
@@ -34,17 +35,24 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
         setSize(1000, 750);
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        settings = new SettingsPanel(this);
+
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
                 renderer.renderScene(g, scene);
+                if(settings.isSpawn()) {
+                    AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f);
+                    ((Graphics2D)g).setComposite(ac);
+                    BufferedImage image = settings.getObjectPreviewRender();
+                    g.drawImage(image, mouseX-image.getWidth()/2, mouseY-image.getHeight()/2+250, null);
+                }
             }
         };
         renderer.setPanel(panel);
-
-        settings = new SettingsPanel(this);
 
         JPanel main = new JPanel();
         main.setLayout(new BorderLayout());
@@ -117,6 +125,9 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if(settings.isSpawn()) {
+            settings.spawn(scene, getMouseX(), getMouseY());
+        }
         scene.invokeSpheres(sphere -> {
             if(sphere instanceof DemoSphere) ((DemoSphere)sphere).setClickMode(false);
         });

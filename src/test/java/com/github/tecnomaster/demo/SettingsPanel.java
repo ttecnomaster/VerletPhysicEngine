@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class SettingsPanel extends JPanel {
     private final DemoFrame demoFrame;
@@ -15,6 +16,7 @@ public class SettingsPanel extends JPanel {
     private TestSceneRenderer testSceneRenderer;
     private JSlider size;
     private int objectType;
+    private boolean spawn;
     public SettingsPanel(DemoFrame demoFrame) {
         this.demoFrame = demoFrame;
         borderType = 0;
@@ -34,6 +36,14 @@ public class SettingsPanel extends JPanel {
         return borderType;
     }
 
+    public boolean isSpawn() {
+        return spawn;
+    }
+
+    public BufferedImage getObjectPreviewRender() {
+        return testSceneRenderer.render;
+    }
+
     private void updateBorder(int type) {
         borderType = type;
         demoFrame.updateWindowSize();
@@ -45,19 +55,19 @@ public class SettingsPanel extends JPanel {
 
         Scene scene = Verlet.createScene();
 
-        spawn(scene);
+        spawn(scene, 0, 0);
 
         testSceneRenderer.scene = scene;
         testSceneRenderer.repaint();
     }
 
-    private void spawn(Scene scene) {
+    protected void spawn(Scene scene, double x, double y) {
         if(objectType == 0) {
-            scene.addSphere(new DemoSphere(0, 0, size.getValue()));
+            scene.addSphere(new DemoSphere(x, y, size.getValue()));
         } else if(objectType == 1) {
-            Demo.spawnCube(0, 0, size.getValue()/2.5f, 3, scene);
+            Demo.spawnCube(x, y, size.getValue()/2.5f, 3, scene);
         } else if(objectType == 2) {
-            Demo.spawnRope(0, 0, size.getValue()/3.5f, 15, scene);
+            Demo.spawnRope(x, y, size.getValue()/3.5f, 15, scene);
         }
     }
 
@@ -107,10 +117,11 @@ public class SettingsPanel extends JPanel {
 
         coreSettings.add(Box.createVerticalStrut(10));
 
-        JButton spawnButton = new JButton("Spawn");
+        JCheckBox spawnButton = new JCheckBox("Spawn");
         spawnButton.addActionListener(l -> {
-            spawn(demoFrame.getScene());
+            spawn = spawnButton.isSelected();
         });
+        spawnButton.setSelected(false);
         panel.add(spawnButton);
 
         updateTestScene(objectType);
@@ -154,6 +165,7 @@ public class SettingsPanel extends JPanel {
     private static class TestSceneRenderer extends JPanel {
         private Scene scene;
         private Dimension size;
+        private BufferedImage render;
         public TestSceneRenderer(int width, int height) {
             this.size = new Dimension(width, height);
             this.scene = null;
@@ -168,9 +180,15 @@ public class SettingsPanel extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            render = new BufferedImage(g.getClipBounds().width+100, g.getClipBounds().height+600, BufferedImage.TYPE_INT_ARGB);
+            Graphics renderG = render.getGraphics();
+
+            renderG.setColor(Color.BLACK);
             if(scene != null) scene.invokeSpheres(sphere -> {
-                render(g, sphere);
+                render(renderG, sphere);
             });
+
+            g.drawImage(render, -50, -50, null);
         }
 
         private void render(Graphics g, Sphere sphere) {
@@ -179,11 +197,11 @@ public class SettingsPanel extends JPanel {
         }
 
         public int translateX(double x) {
-            return (int) (x + getWidth() / 2d);
+            return (int) (x + getWidth() / 2d) + 50;
         }
 
         public int translateY(double y) {
-            return (int) -(y - getHeight() / 2d);
+            return (int) -(y - getHeight() / 2d) + 50;
         }
     }
 }
