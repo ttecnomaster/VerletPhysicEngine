@@ -1,15 +1,12 @@
 package com.github.tecnomaster.demo;
 
-import com.github.tecnomaster.verlet.Scene;
-import com.github.tecnomaster.verlet.Solver;
-import com.github.tecnomaster.verlet.Sphere;
-import com.github.tecnomaster.verlet.Verlet;
+import com.github.tecnomaster.verlet.*;
 import com.github.tecnomaster.verlet.constraint.LinkConstraint;
-import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
-import com.github.tecnomaster.verlet.implementation.VerletGrid;
+import com.github.tecnomaster.verlet.constraint.StaticPositionConstraint;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Demo {
     public static void main(String[] args) {
@@ -27,8 +24,8 @@ public class Demo {
             throw new RuntimeException(e);
         }
 
-        //solver.setGrid(new VerletGrid(frame.getPanelDimension().width, frame.getPanelDimension().height, 75));
         solver.setSubSteps(8);
+
 
         new Runner(60, () -> {
             scene.invokeSpheres(sphere -> {
@@ -48,7 +45,7 @@ public class Demo {
                         || sphere.getY() > frame.getPanelDimension().height/2d + sphere.getRadius()
                         || sphere.getX() < frame.getPanelDimension().width/-2d - sphere.getRadius()
                         || sphere.getX() > frame.getPanelDimension().width/2d + sphere.getRadius())
-                    scene.removeSphere(sphere);
+                    removeSphere(sphere, scene);
             });
 
         }).run();
@@ -69,6 +66,18 @@ public class Demo {
 
         }
 
+    }
+
+    private static void removeSphere(Sphere sphere, Scene scene) {
+        scene.removeSphere(sphere);
+
+        List<Constraint> toRemove = new ArrayList<>();
+        scene.invokeConstraints(constraint -> {
+            if(constraint instanceof LinkConstraint && (((LinkConstraint)constraint).getSphere1() == sphere || ((LinkConstraint)constraint).getSphere2() == sphere)) toRemove.add(constraint);
+            if(constraint instanceof StaticPositionConstraint && ((StaticPositionConstraint)constraint).getSphere() == sphere) toRemove.add(constraint);
+        });
+
+        toRemove.forEach(scene::removeConstraint);
     }
 
     public static void spawnCube(double x, double y, float radius, int spheres, Scene scene) {
