@@ -43,6 +43,13 @@ public class Demo {
             frame.render();
 
             // Remove any sphere that is out of bounds
+            if(frame.getSettings().getBorderType() == 2) scene.invokeSpheres(sphere -> {
+                if(sphere.getY() < frame.getPanelDimension().height/-2d - sphere.getRadius()
+                        || sphere.getY() > frame.getPanelDimension().height/2d + sphere.getRadius()
+                        || sphere.getX() < frame.getPanelDimension().width/-2d - sphere.getRadius()
+                        || sphere.getX() > frame.getPanelDimension().width/2d + sphere.getRadius())
+                    scene.removeSphere(sphere);
+            });
 
         }).run();
 

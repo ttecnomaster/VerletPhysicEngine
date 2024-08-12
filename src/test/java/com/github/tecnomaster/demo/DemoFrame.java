@@ -75,6 +75,14 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
         return scene;
     }
 
+    public Solver getSolver() {
+        return solver;
+    }
+
+    public SettingsPanel getSettings() {
+        return settings;
+    }
+
     protected void updateWindowSize() {
         if(borderConstraint != null) scene.removeConstraint(borderConstraint);
 
@@ -116,6 +124,7 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
     @Override
     public void mousePressed(MouseEvent e) {
         // Get the x and y coordinates relative to the window
+        if(settings.isSpawn()) return;
         int x = e.getX();
         int y = e.getY();
         runAllHoveredSpheres(sphere -> {
@@ -127,6 +136,7 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
     public void mouseReleased(MouseEvent e) {
         if(settings.isSpawn()) {
             settings.spawn(scene, getMouseX(), getMouseY());
+            return;
         }
         scene.invokeSpheres(sphere -> {
             if(sphere instanceof DemoSphere) ((DemoSphere)sphere).setClickMode(false);

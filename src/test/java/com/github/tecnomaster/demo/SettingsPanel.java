@@ -17,10 +17,13 @@ public class SettingsPanel extends JPanel {
     private JSlider size;
     private int objectType;
     private boolean spawn;
+    private int gx, gy;
     public SettingsPanel(DemoFrame demoFrame) {
         this.demoFrame = demoFrame;
         borderType = 0;
         objectType = 0;
+        gx = 0;
+        gy = -1000;
 
         setBorder(new LineBorder(Color.BLACK, 2));
 
@@ -119,6 +122,7 @@ public class SettingsPanel extends JPanel {
 
         JCheckBox spawnButton = new JCheckBox("Spawn");
         spawnButton.addActionListener(l -> {
+            updateTestScene(objectType);
             spawn = spawnButton.isSelected();
         });
         spawnButton.setSelected(false);
@@ -133,8 +137,35 @@ public class SettingsPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        JPanel gravity = new JPanel();
+        gravity.setBorder(new LineBorder(Color.BLACK, 2));
+        gravity.setLayout(new GridLayout(3,2));
+        gravity.add(new JLabel("Gravity:"));
+        gravity.add((new JLabel()));
+        JLabel gXL = new JLabel("X: 0");
+        gravity.add(gXL);
+        JSlider gXS = new JSlider(-5000,5000,0);
+        gXS.addChangeListener(l -> {
+            gXL.setText("X: "+gXS.getValue());
+            gx = gXS.getValue();
+            demoFrame.getSolver().setGravity(gx, gy);
+        });
+        gravity.add(gXS);
+        JLabel gYL = new JLabel("Y: -1000");
+        gravity.add(gYL);
+        JSlider gYS = new JSlider(-5000,5000,-1000);
+        gYS.addChangeListener(l -> {
+            gYL.setText("Y: "+gYS.getValue());
+            gy = gYS.getValue();
+            demoFrame.getSolver().setGravity(gx, gy);
+        });
+        gravity.add(gYS);
+
+        JPanel borderWrap = new JPanel();
+        borderWrap.setLayout(new GridLayout(1,1));
         JPanel border = new JPanel();
-        border.setBorder(new LineBorder(Color.BLACK, 2));
+        borderWrap.add(border);
+        borderWrap.setBorder(new LineBorder(Color.BLACK, 2));
         border.setLayout(new BoxLayout(border, BoxLayout.Y_AXIS));
 
         ButtonGroup group = new ButtonGroup();
@@ -157,7 +188,9 @@ public class SettingsPanel extends JPanel {
         border.add(b3);
 
         panel.add(Box.createVerticalStrut(10));
-        panel.add(border);
+        panel.add(gravity);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(borderWrap);
 
         return panel;
     }
