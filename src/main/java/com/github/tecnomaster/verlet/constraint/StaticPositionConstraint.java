@@ -44,6 +44,14 @@ public class StaticPositionConstraint implements StaticConstraint {
     }
 
     /**
+     * Returns the sphere that is affected by this constraint.
+     * @return The Sphere that should be turned static.
+     */
+    public Sphere getSphere() {
+        return sphere;
+    }
+
+    /**
      * Ensures that the Sphere always stays in the same place.
      * Constantly sets the x and y position of the Sphere to the static x and y position.
      */

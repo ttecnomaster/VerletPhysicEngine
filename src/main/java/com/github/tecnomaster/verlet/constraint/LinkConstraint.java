@@ -48,6 +48,26 @@ public class LinkConstraint implements StaticConstraint {
     }
 
     /**
+     * A LinkConstraint requires two Spheres in order to function.
+     * Those two spheres will then be linked together.
+     * This method returns the first sphere.
+     * @return The first Sphere linked to the other sphere.
+     */
+    public Sphere getSphere1() {
+        return sphere1;
+    }
+
+    /**
+     * A LinkConstraint requires two Spheres in order to function.
+     * Those two spheres will then be linked together.
+     * This method returns the second sphere.
+     * @return The second Sphere linked to the other sphere.
+     */
+    public Sphere getSphere2() {
+        return sphere2;
+    }
+
+    /**
      * Ensures that the two Spheres hold their target distance.
      * If not then move them together/apart.
      * It calculates the {@link VectorUtil#length(double, double)} between those two Spheres, subtracts the combined radius and moves Spheres depending on the outcome.
