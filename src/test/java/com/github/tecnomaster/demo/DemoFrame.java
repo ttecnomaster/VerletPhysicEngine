@@ -1,21 +1,26 @@
 package com.github.tecnomaster.demo;
 
+import com.github.tecnomaster.verlet.Constraint;
 import com.github.tecnomaster.verlet.Scene;
+import com.github.tecnomaster.verlet.Solver;
+import com.github.tecnomaster.verlet.constraint.CircleAreaConstraint;
+import com.github.tecnomaster.verlet.constraint.RectangleConstraint;
 import com.github.tecnomaster.verlet.implementation.SphereRunnable;
 import com.github.tecnomaster.verlet.utils.VectorUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class DemoFrame extends JFrame implements MouseListener, MouseMotionListener {
     private final JPanel panel;
+    private final SettingsPanel settings;
     private Scene scene;
+    private Solver solver;
     private DemoRenderer renderer;
     private int mouseX, mouseY;
-    public DemoFrame(Scene scene) {
+    private Constraint borderConstraint;
+    public DemoFrame(Scene scene, Solver solver) {
         super("Demo");
 
         renderer = new DemoRenderer();
@@ -23,6 +28,7 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
         mouseX = mouseY = 0;
 
         this.scene = scene;
+        this.solver = solver;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(1000, 750);
@@ -37,12 +43,49 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
             }
         };
         renderer.setPanel(panel);
-        add(panel);
+
+        settings = new SettingsPanel(this);
+
+        JPanel main = new JPanel();
+        main.setLayout(new BorderLayout());
+        main.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateWindowSize();
+            }
+        });
+
+        main.add(panel, BorderLayout.CENTER);
+        main.add(settings, BorderLayout.EAST);
+
+        add(main);
 
         setVisible(true);
     }
 
+    public Scene getScene() {
+        return scene;
+    }
 
+    protected void updateWindowSize() {
+        if(borderConstraint != null) scene.removeConstraint(borderConstraint);
+
+        // VerletGrid
+
+        // Border Constraint
+        int borderType = settings.getBorderType();
+        if(borderType == 0) borderConstraint = new RectangleConstraint(getPanelDimension().width, getPanelDimension().height);
+        else if(borderType == 1) borderConstraint = new CircleAreaConstraint(0, 0, Math.min(getPanelDimension().width, getPanelDimension().height)/2f);
+        else borderConstraint = null;
+
+        if(borderConstraint != null) {
+            scene.addConstraint(borderConstraint);
+        }
+    }
+
+    public Dimension getPanelDimension() {
+        return panel.getSize();
+    }
 
     public void render() {
         scene.invokeSpheres(sphere -> {

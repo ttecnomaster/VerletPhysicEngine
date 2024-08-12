@@ -15,20 +15,20 @@ public class Demo {
     public static void main(String[] args) {
 
         Scene scene = Verlet.createScene();
-
-        // Spheres
-        for(int i = 0; i < 15; i++) scene.addSphere(new DemoSphere(1, 0, (float) (25+Math.random()*50)));
-
-        // Cube
-        spawnCube(0, 0, 15, 3, scene);
-
-        DemoFrame frame = new DemoFrame(scene);
-
         Solver solver = Verlet.createSolver(scene);
-        solver.setGrid(new VerletGrid(1920, 1080, 75));
-        solver.setSubSteps(8);
 
-        scene.addConstraint(new RectangleConstraint(1920 - 75,1080 - 100));
+        DemoFrame frame = new DemoFrame(scene, solver);
+
+        frame.render();
+
+        try {
+            Thread.sleep(15);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        //solver.setGrid(new VerletGrid(frame.getPanelDimension().width, frame.getPanelDimension().height, 75));
+        solver.setSubSteps(8);
 
         new Runner(60, () -> {
             scene.invokeSpheres(sphere -> {
@@ -46,7 +46,23 @@ public class Demo {
 
     }
 
-    private static void spawnCube(double x, double y, float radius, int spheres, Scene scene) {
+    public static void spawnRope(double x, double y, float radius, int length, Scene scene) {
+
+        Sphere last = new DemoSphere(x, y, radius);
+        scene.addSphere(last);
+
+        for(int i = 1; i < length; i++) {
+
+            Sphere next = new DemoSphere(x, y - i*radius*2, radius);
+            scene.addSphere(next);
+            scene.addConstraint(new LinkConstraint(last, next));
+            last = next;
+
+        }
+
+    }
+
+    public static void spawnCube(double x, double y, float radius, int spheres, Scene scene) {
 
         Sphere[] spheres1 = new Sphere[(spheres+1)*4];
 
