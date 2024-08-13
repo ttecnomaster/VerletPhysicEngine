@@ -45,6 +45,8 @@ public class DemoFrame extends JFrame implements MouseListener, MouseMotionListe
                 super.paintComponent(g);
 
                 renderer.renderScene(g, scene);
+                if(settings.getBorderType() == 0) renderer.drawRectangle(g, false, -getPanelDimension().width/2d, -getPanelDimension().height/2d, getPanelDimension().width, getPanelDimension().height);
+                else if(settings.getBorderType() == 1) renderer.drawSphere((Graphics2D) g, false, 0, 0, Math.min(getPanelDimension().width, getPanelDimension().height)/2f);
                 if(settings.isSpawn()) {
                     AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f);
                     ((Graphics2D)g).setComposite(ac);

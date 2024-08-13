@@ -30,7 +30,7 @@ public class DemoRenderer {
         drawSphere(g, false, sphere.getX(), sphere.getY(), sphere.getRadius());
     }
 
-    private void drawSphere(Graphics2D g, boolean fill, double x, double y, double radius) {
+    public void drawSphere(Graphics2D g, boolean fill, double x, double y, double radius) {
         if(fill) fillSphere(g, translateX(x) - radius, translateY(y) - radius, radius * 2, radius * 2);
         else drawSphere(g, translateX(x) - radius, translateY(y) - radius, radius * 2, radius * 2);
     }
@@ -41,6 +41,11 @@ public class DemoRenderer {
 
     private void fillSphere(Graphics2D g, double x, double y, double width, double height) {
         g.fillOval((int) x, (int) y, (int) width, (int) height);
+    }
+
+    public void drawRectangle(Graphics g, boolean fill, double x, double y, double width, double height) {
+        if(fill) g.fillRect(translateX(x), translateY(y), (int) width, (int) height);
+        else g.drawRect(translateX(x), translateY(y), (int) width, (int) height);
     }
 
     public int translateX(double x) {
