@@ -23,7 +23,7 @@ public class Main {
 
         solver.setSubSteps(8);
         solver.setGrid(new VerletGrid(1920,1080, 8));
-        solver.setMultiThreading(0);
+        solver.setMultiThreading(8);
 
         for(int i = 0; i < 5000; i++) {
             //scene.addSphere(new ColorSphere(Verlet.createSphere(-900+Math.random()*1500, -500+Math.random()*900, 25), new Color((int) (Math.random()*256),(int) (Math.random()*256),(int) (Math.random()*256))));
