@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.ttecnomaster</groupId>
+    <groupId>io.github.ttecnomaster</groupId>
     <artifactId>VerletPhysicEngine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -33,7 +33,7 @@
         <developer>
             <name>Florian König</name>
             <email>florian.koenig321@outlook.com</email>
-            <organization>com.github.ttecnomaster</organization>
+            <organization>io.github.ttecnomaster</organization>
             <organizationUrl>https://github.com/ttecnomaster/</organizationUrl>
         </developer>
     </developers>
