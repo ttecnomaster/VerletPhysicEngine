@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="com.github.tecnomaster.run.Main" />
+    <option name="MAIN_CLASS_NAME" value="com.github.ttecnomaster.run.Main" />
     <module name="VerletPhysicEngine" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.github.tecnomaster.run.*" />
+        <option name="PATTERN" value="com.github.ttecnomaster.run.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
